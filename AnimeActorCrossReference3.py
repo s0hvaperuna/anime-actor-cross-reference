@@ -43,18 +43,18 @@ def main():
             temp = None
             for k in soup.find_all('tr'):
                 for j in k.children:
-                    if j.name is not None and j.a is not None:
+                    if j.name is not None and j.a is not None and j.a.contents != [] and j.small is not None:
                         att = j.attrs
-                        if 'width' not in att and 'valign' in att and 'class' in att and att['valign'] == 'top':
+                        if 'width' not in att and 'valign' in att and att['valign'] == 'top':
                             if temp is None:
-                                if j.small.contents[0] == 'Main' or j.small.contents[0] == 'Supporting' or \
-                                                j.small.contents[0] == 'Japanese':
+                                if j.small.contents[0] == 'Main' or j.small.contents[0] == 'Supporting':
                                     temp = j.a.contents[0]
                             else:
-                                if j.a.contents[0] in master:
-                                    master[j.a.contents[0]].append((titles[i].string, temp))
-                                else:
-                                    master[j.a.contents[0]] = [(titles[i].string, temp)]
+                                if j.small.contents[0] == 'Japanese':
+                                    if j.a.contents[0] in master:
+                                        master[j.a.contents[0]].append((titles[i].string, temp))
+                                    else:
+                                        master[j.a.contents[0]] = [(titles[i].string, temp)]
                                 temp = None
 
             counter += 1
@@ -84,17 +84,13 @@ def main():
     display(master, f)
 
 def display(dict, f):
+    f = sys.stdout
     if f == 'y' or f == 'Y':
         f = open('voice_actor_cross_reference.txt', 'w')
-        for key in dict:
-            print(key, file=f)
-            for j in dict[key]:
-                print('\t' + j[0] + ' - ' + j[1], file=f)
-    else:
-        for key in dict:
-            print(key)
-            for j in dict[key]:
-                print('\t' + j[0] + ' - ' + j[1])
-
+    for key in dict:
+        print(key, file=f)
+        for j in dict[key]:
+            print('    ' + j[0] + ' - ' + j[1], file=f)
+    f.close()
 if __name__ == "__main__":
     main()
