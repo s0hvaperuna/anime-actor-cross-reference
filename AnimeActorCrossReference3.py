@@ -27,6 +27,8 @@ def main():
     f = input("Save to file (y/n): ")
     s = input("Filter\na(all), w(watching), c(completed), o(onhold), d(dropped), p(plan to watch)\nYou can combine different categories e.g. wd would get all from watching and dropped\n")
 
+    t = time.time()
+
     r = requests.get('http://myanimelist.net/malappinfo.php?u=' + str(usr) + '&status=all&type=anime',
                      headers={"user-agent": "iMAL-iOS"})
 
@@ -109,7 +111,6 @@ def main():
     threads = []
     thread = 15 # Max amount of full sized threads. Usually there will be one more smaller thread
     index = split(indexes, thread)
-    t1 = time.time()
     for idx, group in enumerate(split(urls, thread)):
         t = Thread(target=get, args=(group, index[idx],))
         t.start()
@@ -117,11 +118,10 @@ def main():
     for t in threads:
         t.join()
     sys.stdout.write('\r')
-    print('\n', time.time() - t1)
-    display(master, f)
+    display(master, f, t)
 
 
-def display(dict, f):
+def display(dict, f, t):
     if f == 'y' or f == 'Y':
         f = open('voice_actor_cross_reference.txt', 'w')
     else:
@@ -130,9 +130,9 @@ def display(dict, f):
         print(key, file=f)
         for j in dict[key]:
             print('    ' + j[0] + ' - ' + j[1], file=f)
+    print('Total time: ', time.time() - t)
+    f.close()
 
 
 if __name__ == "__main__":
-    t = time.time()
     main()
-    print('Total time: ', time.time() - t)
