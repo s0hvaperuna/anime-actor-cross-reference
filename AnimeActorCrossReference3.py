@@ -23,9 +23,9 @@ def split(a, n):
 
 
 def main():
-    usr = 's0hvaperuna'#input("MAL username: ")
-    f = 'n'#input("Save to file (y/n): ")
-    s = 'a'#input("Filter\na(all), w(watching), c(completed), o(onhold), d(dropped), p(plan to watch)\nYou can combine different categories e.g. wd would get all from watching and dropped\n")
+    usr = input("MAL username: ")
+    f = input("Save to file (y/n): ")
+    s = input("Filter\na(all), w(watching), c(completed), o(onhold), d(dropped), p(plan to watch)\nYou can combine different categories e.g. wd would get all from watching and dropped\n")
 
     r = requests.get('http://myanimelist.net/malappinfo.php?u=' + str(usr) + '&status=all&type=anime',
                      headers={"user-agent": "iMAL-iOS"})
