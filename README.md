@@ -1,5 +1,5 @@
 # anime-actor-cross-reference
-This program has you specify your [MyAnimeList](myanimelist.net) username. It then combs through your list of anime and shows for each voice actor (from anime on your list) which characters they played in which anime (that you've seen). This version is a fork of the original by [WolfeCub](https://github.com/WolfeCub) with some added features like multithreading that make it a lot faster
+This program has you specify your [MyAnimeList](myanimelist.net) username. It then combs through your list of anime and shows for each voice actor (from anime on your list) which characters they played in which anime (that you've seen). This version is a fork of the original by [WolfeCub](https://github.com/WolfeCub) with some added features like multithreading that make it a lot faster with very big lists.
 
 
 ### Short Guide for New Version
